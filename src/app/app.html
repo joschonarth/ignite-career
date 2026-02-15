@@ -16,21 +16,37 @@
         </div>
 
         <span
-          class="text-xs font-bold px-3 py-1 bg-violet-500/10 text-violet-400 border border-violet-500/20 rounded-full uppercase tracking-wider"
+          class="text-xs font-bold px-3 py-1 border rounded-full uppercase tracking-wider transition-colors"
+          [class.bg-violet-500/10]="currentStep() !== '/resume-informations'"
+          [class.text-violet-400]="currentStep() !== '/resume-informations'"
+          [class.border-violet-500/20]="currentStep() !== '/resume-informations'"
+          [class.bg-emerald-500/10]="currentStep() === '/resume-informations'"
+          [class.text-emerald-400]="currentStep() === '/resume-informations'"
+          [class.border-emerald-500/20]="currentStep() === '/resume-informations'"
         >
-          Passo {{ currentStep() === '/personal' ? '01' : '02' }}
+          {{
+            currentStep() === '/resume-informations'
+              ? 'FINALIZADO'
+              : 'Passo ' + (currentStep() === '/personal' ? '01' : '02')
+          }}
         </span>
       </div>
 
       <div class="flex items-center gap-2 h-1 bg-zinc-800 rounded-full overflow-hidden">
         <div
-          class="h-full bg-violet-600 shadow-[0_0_10px_rgba(124,58,237,0.5)] transition-all duration-500 w-1/2"
+          class="h-full transition-all duration-500 w-1/2"
+          [class.bg-violet-600]="currentStep() !== '/resume-informations'"
+          [class.shadow-[0_0_10px_rgba(124,58,237,0.5)]]="currentStep() !== '/resume-informations'"
+          [class.bg-emerald-600]="currentStep() === '/resume-informations'"
+          [class.shadow-[0_0_10px_rgba(5,150,105,0.5)]]="currentStep() === '/resume-informations'"
         ></div>
 
         <div
           class="h-full transition-all duration-500 ease-out w-1/2"
           [class.bg-violet-600]="currentStep() === '/professional'"
           [class.shadow-[0_0_10px_rgba(124,58,237,0.5)]]="currentStep() === '/professional'"
+          [class.bg-emerald-600]="currentStep() === '/resume-informations'"
+          [class.shadow-[0_0_10px_rgba(5,150,105,0.5)]]="currentStep() === '/resume-informations'"
         ></div>
       </div>
     </div>
