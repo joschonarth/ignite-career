@@ -17,6 +17,7 @@ export class ResumeInformations {
 
   newCurriculum() {
     this._curriculumFormStore.curriculumFormGroup.reset();
+    this._curriculumFormStore.resetProfessionalFormArray();
     this._router.navigate(['/']);
   }
 }
