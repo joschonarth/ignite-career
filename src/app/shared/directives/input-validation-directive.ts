@@ -12,6 +12,8 @@ export class InputValidationDirective {
   private readonly _elementRef = inject(ElementRef);
   private readonly _renderer2 = inject(Renderer2);
 
+  private errorElement: HTMLElement | null = null;
+
   @Input() errorMessage = 'Campo inválido';
 
   ngOnInit() {
@@ -31,8 +33,10 @@ export class InputValidationDirective {
 
     if (isInvalid) {
       this.setInvalidStyles();
+      this.showError();
     } else {
       this.setValidStyles();
+      this.hideError();
     }
   }
 
@@ -58,5 +62,34 @@ export class InputValidationDirective {
     this._renderer2.addClass(el, 'border-zinc-800');
     this._renderer2.addClass(el, 'focus:border-violet-500');
     this._renderer2.addClass(el, 'focus:ring-violet-500');
+  }
+
+  private hideError() {
+    if (!this.errorElement) return;
+
+    const parent = this._elementRef.nativeElement.parentNode;
+    this._renderer2.removeChild(parent, this.errorElement);
+    this.errorElement = null;
+  }
+
+  private showError() {
+    if (this.errorElement) return;
+
+    this.errorElement = this._renderer2.createElement('p');
+    const text = this._renderer2.createText(this.errorMessage);
+    this._renderer2.appendChild(this.errorElement, text);
+
+    this._renderer2.addClass(this.errorElement, 'text-red-500');
+    this._renderer2.addClass(this.errorElement, 'text-sm');
+    this._renderer2.addClass(this.errorElement, 'mt-1');
+
+    const parent = this._elementRef.nativeElement.parentNode;
+    const nextSibling = this._elementRef.nativeElement.nextSibling;
+
+    if (nextSibling) {
+      this._renderer2.insertBefore(parent, this.errorElement, nextSibling);
+    } else {
+      this._renderer2.appendChild(parent, this.errorElement);
+    }
   }
 }
