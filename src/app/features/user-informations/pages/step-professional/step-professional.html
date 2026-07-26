@@ -59,6 +59,8 @@
               placeholder="Ex: Engenheiro de Software"
               class="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-2 text-zinc-200 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-colors font-medium"
               formControlName="position"
+              appInputValidation
+              errorMessage="O campo Cargo é obrigatório"
             />
           </div>
 
@@ -69,6 +71,8 @@
               placeholder="Ex: Rocketseat"
               class="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-2 text-zinc-200 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-colors"
               formControlName="company"
+              appInputValidation
+              errorMessage="O campo Empresa é obrigatório"
             />
           </div>
 
@@ -81,6 +85,8 @@
               placeholder="Conte um pouco sobre suas responsabilidades..."
               class="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-2 text-zinc-200 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-colors resize-none"
               formControlName="description"
+              appInputValidation
+              errorMessage="O campo Descrição é obrigatório"
             ></textarea>
           </div>
         </div>
