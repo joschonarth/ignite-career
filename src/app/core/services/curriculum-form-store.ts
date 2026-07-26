@@ -27,4 +27,8 @@ export class CurriculumFormStore {
   get personalFormGroup() {
     return this.curriculumForm.get('personal') as FormGroup;
   }
+
+  get professionalFormArray() {
+    return this.curriculumForm.get('professional') as FormArray;
+  }
 }
