@@ -1,9 +1,9 @@
 import { Component, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { CurriculumFormStore } from '../../../../core/services/curriculum-form-store';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { StatesAndCitiesApi } from '../../../../core/services/states-and-cities-api';
-import { rxResource } from '@angular/core/rxjs-interop';
+import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-step-personal',
@@ -14,6 +14,14 @@ export class StepPersonal {
   readonly _curriculumFormStore = inject(CurriculumFormStore);
   private readonly _router = inject(Router);
   private readonly _statesAndCitiesApi = inject(StatesAndCitiesApi);
+
+  private get stateControl() {
+    return this._curriculumFormStore.personalFormGroup.get('state') as FormControl;
+  }
+
+  stateSelected = toSignal<string>(this.stateControl!.valueChanges, {
+    initialValue: this.stateControl!.value || '',
+  });
 
   statesResource = rxResource({
     params: () => true,
