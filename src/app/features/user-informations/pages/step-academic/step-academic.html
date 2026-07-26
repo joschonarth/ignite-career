@@ -1,14 +1,14 @@
 <form
   class="space-y-6"
-  [formArray]="_curriculumFormStore.professionalFormArray"
-  (ngSubmit)="goToAcademic()"
+  [formArray]="_curriculumFormStore.academicFormArray"
+  (ngSubmit)="goToResume()"
 >
   <div class="flex justify-between items-end pb-2">
-    <label class="block text-sm font-medium text-zinc-300">Histórico Profissional</label>
+    <label class="block text-sm font-medium text-zinc-300">Formação Acadêmica</label>
 
     <button
       type="button"
-      (click)="addExperience()"
+      (click)="addAcademic()"
       class="text-xs font-bold text-violet-400 hover:text-violet-300 flex items-center gap-1 transition-colors uppercase tracking-wider border border-violet-500/30 px-3 py-1.5 rounded hover:bg-violet-500/10 hover:border-violet-500 cursor-pointer"
     >
       <svg
@@ -30,16 +30,16 @@
   </div>
 
   <div class="space-y-4 min-h-[300px]">
-    @for (item of professionalArrayControls(); track item) {
+    @for (item of academicArrayControls(); track item) {
       <div
         class="group bg-zinc-950 border border-zinc-800 rounded-xl p-6 relative animate-fade-in hover:border-zinc-700 transition-colors"
         [formGroupName]="$index"
       >
         <button
           type="button"
-          (click)="removeExperience($index)"
+          (click)="removeAcademic($index)"
           class="absolute top-4 right-4 text-zinc-600 hover:text-red-400 p-2 rounded transition-colors cursor-pointer"
-          title="Remover Experiência"
+          title="Remover Formação"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -59,41 +59,61 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="col-span-1 md:col-span-2">
-            <label class="text-xs text-zinc-500 mb-1 block uppercase">Cargo</label>
+            <label class="text-xs text-zinc-500 mb-1 block uppercase">Instituição</label>
             <input
               type="text"
-              placeholder="Ex: Engenheiro de Software"
+              placeholder="Ex: Universidade Federal"
               class="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-2 text-zinc-200 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-colors font-medium"
-              formControlName="position"
+              formControlName="institution"
               appInputValidation
-              errorMessage="O campo Cargo é obrigatório"
+              errorMessage="O campo Instituição é obrigatório"
             />
           </div>
 
           <div class="col-span-1 md:col-span-2">
-            <label class="text-xs text-zinc-500 mb-1 block uppercase">Empresa</label>
+            <label class="text-xs text-zinc-500 mb-1 block uppercase">Curso</label>
             <input
               type="text"
-              placeholder="Ex: Rocketseat"
+              placeholder="Ex: Ciência da Computação"
               class="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-2 text-zinc-200 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-colors"
-              formControlName="company"
+              formControlName="course"
               appInputValidation
-              errorMessage="O campo Empresa é obrigatório"
+              errorMessage="O campo Curso é obrigatório"
+            />
+          </div>
+
+          <div>
+            <label class="text-xs text-zinc-500 mb-1 block uppercase">Data de início</label>
+            <input
+              type="date"
+              class="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-2 text-zinc-200 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-colors"
+              formControlName="startDate"
+              appInputValidation
+              errorMessage="O campo Data de início é obrigatório"
+            />
+          </div>
+
+          <div>
+            <label class="text-xs text-zinc-500 mb-1 block uppercase">Data de conclusão</label>
+            <input
+              type="date"
+              class="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-2 text-zinc-200 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              formControlName="endDate"
+              appInputValidation
+              errorMessage="O campo Data de conclusão é obrigatório"
             />
           </div>
 
           <div class="col-span-1 md:col-span-2">
-            <label class="text-xs text-zinc-500 mb-1 block uppercase"
-              >Descrição das atividades</label
-            >
-            <textarea
-              rows="3"
-              placeholder="Conte um pouco sobre suas responsabilidades..."
-              class="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-2 text-zinc-200 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-colors resize-none"
-              formControlName="description"
-              appInputValidation
-              errorMessage="O campo Descrição é obrigatório"
-            ></textarea>
+            <label class="flex items-center gap-3 cursor-pointer w-fit">
+              <input
+                type="checkbox"
+                class="w-4 h-4 rounded border-zinc-700 bg-zinc-900 text-violet-600 focus:ring-violet-500 focus:ring-offset-zinc-900 cursor-pointer"
+                formControlName="inProgress"
+                (change)="onInProgressChange($index)"
+              />
+              <span class="text-sm text-zinc-400">Em andamento</span>
+            </label>
           </div>
         </div>
       </div>
@@ -114,14 +134,14 @@
             stroke-linecap="round"
             stroke-linejoin="round"
           >
-            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
-            <polyline points="14 2 14 8 20 8" />
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+            <path d="M6 12v5c3 3 9 3 12 0v-5" />
           </svg>
         </div>
-        <p class="text-zinc-500 text-sm">Nenhuma experiência registrada.</p>
+        <p class="text-zinc-500 text-sm">Nenhuma formação registrada.</p>
         <button
           type="button"
-          (click)="addExperience()"
+          (click)="addAcademic()"
           class="mt-2 text-violet-400 text-sm font-semibold hover:text-violet-300 hover:underline"
         >
           Adicionar agora
@@ -133,7 +153,7 @@
   <div class="flex justify-between pt-6 border-t border-zinc-800 mt-6">
     <button
       type="button"
-      routerLink="/personal"
+      routerLink="/professional"
       class="text-zinc-400 hover:text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center gap-2 cursor-pointer"
     >
       <svg
@@ -154,10 +174,10 @@
 
     <button
       type="submit"
-      class="bg-violet-600 hover:bg-violet-500 text-white px-6 py-3 rounded-lg font-bold text-sm tracking-wide transition-all flex items-center gap-2 shadow-lg shadow-violet-600/20 hover:shadow-violet-600/40 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
-      [disabled]="_curriculumFormStore.professionalFormArray.invalid"
+      class="bg-emerald-600 hover:bg-emerald-500 text-white px-8 py-3 rounded-lg font-bold text-sm tracking-wide transition-all flex items-center gap-2 shadow-lg shadow-emerald-600/20 hover:shadow-emerald-600/40 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
+      [disabled]="_curriculumFormStore.curriculumFormGroup.invalid"
     >
-      PRÓXIMO PASSO
+      ENVIAR CURRÍCULO
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="18"
@@ -169,8 +189,8 @@
         stroke-linecap="round"
         stroke-linejoin="round"
       >
-        <path d="M5 12h14" />
-        <path d="m12 5 7 7-7 7" />
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+        <path d="m22 4-12 12-4-4" />
       </svg>
     </button>
   </div>

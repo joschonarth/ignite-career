@@ -38,7 +38,7 @@ export class StepProfessional {
     this._curriculumFormStore.professionalFormArray.removeAt(index);
   }
 
-  goToResume() {
-    this._router.navigate(['/resume-informations']);
+  goToAcademic() {
+    this._router.navigate(['/academic']);
   }
 }

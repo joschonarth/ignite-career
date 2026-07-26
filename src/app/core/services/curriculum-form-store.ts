@@ -28,6 +28,7 @@ export class CurriculumFormStore {
       ],
       [Validators.required],
     ),
+    academic: new FormArray([this.createAcademicFormGroup()], [Validators.required]),
   });
 
   get curriculumFormGroup() {
@@ -42,6 +43,20 @@ export class CurriculumFormStore {
     return this.curriculumForm.get('professional') as FormArray;
   }
 
+  get academicFormArray() {
+    return this.curriculumForm.get('academic') as FormArray;
+  }
+
+  createAcademicFormGroup() {
+    return new FormGroup({
+      institution: new FormControl('', [Validators.required]),
+      course: new FormControl('', [Validators.required]),
+      startDate: new FormControl('', [Validators.required]),
+      endDate: new FormControl('', [Validators.required]),
+      inProgress: new FormControl(false),
+    });
+  }
+
   resetProfessionalFormArray() {
     this.professionalFormArray.clear();
     this.professionalFormArray.push(
@@ -51,5 +66,10 @@ export class CurriculumFormStore {
         description: new FormControl('', [Validators.required]),
       }),
     );
+  }
+
+  resetAcademicFormArray() {
+    this.academicFormArray.clear();
+    this.academicFormArray.push(this.createAcademicFormGroup());
   }
 }
