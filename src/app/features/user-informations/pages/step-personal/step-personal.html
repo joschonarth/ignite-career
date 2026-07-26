@@ -56,7 +56,11 @@
         class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-3 text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-colors"
         formControlName="address"
         appInputValidation
-        errorMessage="O campo Endereço é obrigatório"
+        [errorMessage]="
+          _curriculumFormStore.personalFormGroup.get('address')?.hasError('pattern')
+            ? 'O endereço deve seguir o padrão: Rua, Número, Bairro'
+            : 'O campo Endereço é obrigatório'
+        "
       />
     </div>
 
