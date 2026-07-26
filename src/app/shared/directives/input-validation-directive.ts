@@ -1,4 +1,12 @@
-import { DestroyRef, Directive, ElementRef, inject, Input, Renderer2 } from '@angular/core';
+import {
+  DestroyRef,
+  Directive,
+  ElementRef,
+  HostListener,
+  inject,
+  Input,
+  Renderer2,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NgControl } from '@angular/forms';
 
@@ -17,11 +25,14 @@ export class InputValidationDirective {
   @Input() errorMessage = 'Campo inválido';
 
   ngOnInit() {
-    console.log('OnInit errorMessage:', this.errorMessage);
-
     this._ngControl.statusChanges?.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(() => {
       this.updateStatus();
     });
+  }
+
+  @HostListener('blur')
+  onBlur() {
+    this.updateStatus();
   }
 
   private updateStatus() {
