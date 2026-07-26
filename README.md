@@ -19,6 +19,10 @@ _Formulário multi-step para cadastro de currículo._
 
 ---
 
+<img width="1920" height="911" alt="screencapture-localhost-4200-personal-2026-07-26-19_25_18" src="https://github.com/user-attachments/assets/6eb8a9f1-1d15-4226-8f31-297994df5a4d" />
+
+---
+
 ## 📃 Sobre
 
 O **Ignite Career** é uma aplicação web para cadastro de currículo, desenvolvida com **Angular** e **TypeScript**. O formulário é dividido etapas (steps), construídas com **Reactive Forms**, permitindo validação em tempo real e adição dinâmica de múltiplas experiências profissionais através de um `FormArray`. Ao final do preenchimento, a aplicação gera automaticamente um resumo com todos os dados informados.
