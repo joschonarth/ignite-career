@@ -17,37 +17,28 @@
 
         <span
           class="text-xs font-bold px-3 py-1 border rounded-full uppercase tracking-wider transition-colors"
-          [class.bg-violet-500/10]="currentStep() !== '/resume-informations'"
-          [class.text-violet-400]="currentStep() !== '/resume-informations'"
-          [class.border-violet-500/20]="currentStep() !== '/resume-informations'"
-          [class.bg-emerald-500/10]="currentStep() === '/resume-informations'"
-          [class.text-emerald-400]="currentStep() === '/resume-informations'"
-          [class.border-emerald-500/20]="currentStep() === '/resume-informations'"
+          [class.bg-violet-500/10]="!isFinished()"
+          [class.text-violet-400]="!isFinished()"
+          [class.border-violet-500/20]="!isFinished()"
+          [class.bg-emerald-500/10]="isFinished()"
+          [class.text-emerald-400]="isFinished()"
+          [class.border-emerald-500/20]="isFinished()"
         >
-          {{
-            currentStep() === '/resume-informations'
-              ? 'FINALIZADO'
-              : 'Passo ' + (currentStep() === '/personal' ? '01' : '02')
-          }}
+          {{ isFinished() ? 'FINALIZADO' : 'Passo ' + currentStepNumber() }}
         </span>
       </div>
 
       <div class="flex items-center gap-2 h-1 bg-zinc-800 rounded-full overflow-hidden">
-        <div
-          class="h-full transition-all duration-500 w-1/2"
-          [class.bg-violet-600]="currentStep() !== '/resume-informations'"
-          [class.shadow-[0_0_10px_rgba(124,58,237,0.5)]]="currentStep() !== '/resume-informations'"
-          [class.bg-emerald-600]="currentStep() === '/resume-informations'"
-          [class.shadow-[0_0_10px_rgba(5,150,105,0.5)]]="currentStep() === '/resume-informations'"
-        ></div>
-
-        <div
-          class="h-full transition-all duration-500 ease-out w-1/2"
-          [class.bg-violet-600]="currentStep() === '/professional'"
-          [class.shadow-[0_0_10px_rgba(124,58,237,0.5)]]="currentStep() === '/professional'"
-          [class.bg-emerald-600]="currentStep() === '/resume-informations'"
-          [class.shadow-[0_0_10px_rgba(5,150,105,0.5)]]="currentStep() === '/resume-informations'"
-        ></div>
+        @for (step of steps; track step.path; let i = $index) {
+          <div
+            class="h-full transition-all duration-500 ease-out"
+            [style.width]="stepSegmentWidth()"
+            [class.bg-violet-600]="isSegmentActive(i) && !isFinished()"
+            [class.shadow-[0_0_10px_rgba(124,58,237,0.5)]]="isSegmentActive(i) && !isFinished()"
+            [class.bg-emerald-600]="isFinished()"
+            [class.shadow-[0_0_10px_rgba(5,150,105,0.5)]]="isFinished()"
+          ></div>
+        }
       </div>
     </div>
 

@@ -113,6 +113,73 @@
     </div>
   </section>
 
+  <!-- Formação Acadêmica -->
+  <section class="space-y-4">
+    <h3 class="text-sm font-bold text-violet-400 uppercase tracking-wider flex items-center gap-2">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+        <path d="M6 12v5c3 3 9 3 12 0v-5" />
+      </svg>
+      Formação Acadêmica
+    </h3>
+
+    <div class="space-y-4">
+      @for (education of academicData; track education) {
+        <div
+          class="bg-zinc-950 border border-zinc-800 rounded-xl p-6 relative hover:border-zinc-700 transition-colors"
+        >
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="col-span-1 md:col-span-2">
+              <label class="text-xs text-zinc-500 mb-1 block uppercase">Instituição</label>
+              <p class="text-zinc-200 font-medium text-lg">{{ education.institution }}</p>
+            </div>
+
+            <div class="col-span-1 md:col-span-2">
+              <label class="text-xs text-zinc-500 mb-1 block uppercase">Curso</label>
+              <p class="text-zinc-200 font-medium text-violet-300">{{ education.course }}</p>
+            </div>
+
+            <div>
+              <label class="text-xs text-zinc-500 mb-1 block uppercase">Data de início</label>
+              <p class="text-zinc-200 font-medium">
+                {{ education.startDate | date: 'MM/yyyy' }}
+              </p>
+            </div>
+
+            <div>
+              <label class="text-xs text-zinc-500 mb-1 block uppercase">Data de conclusão</label>
+              @if (education.inProgress) {
+                <span
+                  class="inline-block text-xs font-bold px-2 py-1 bg-violet-500/10 text-violet-400 border border-violet-500/20 rounded-full uppercase tracking-wider"
+                >
+                  Em andamento
+                </span>
+              } @else {
+                <p class="text-zinc-200 font-medium">
+                  {{ education.endDate | date: 'MM/yyyy' }}
+                </p>
+              }
+            </div>
+          </div>
+        </div>
+      } @empty {
+        <div class="p-6 border border-dashed border-zinc-800 rounded-xl text-center text-zinc-500">
+          Nenhuma formação registrada.
+        </div>
+      }
+    </div>
+  </section>
+
   <div class="flex justify-center pt-8 border-t border-zinc-800 mt-8">
     <button
       (click)="newCurriculum()"

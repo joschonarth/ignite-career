@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
-import { TitleCasePipe } from '@angular/common';
+import { Router } from '@angular/router';
+import { DatePipe, TitleCasePipe } from '@angular/common';
 import { CurriculumFormStore } from '../../../../core/services/curriculum-form-store';
 
 @Component({
   selector: 'app-resume-informations',
-  imports: [TitleCasePipe],
+  imports: [TitleCasePipe, DatePipe],
   templateUrl: './resume-informations.html',
 })
 export class ResumeInformations {
@@ -14,10 +14,12 @@ export class ResumeInformations {
 
   personalData = this._curriculumFormStore.personalFormGroup.value;
   professionalData = this._curriculumFormStore.professionalFormArray.value;
+  academicData = this._curriculumFormStore.academicFormArray.value;
 
   newCurriculum() {
     this._curriculumFormStore.curriculumFormGroup.reset();
     this._curriculumFormStore.resetProfessionalFormArray();
+    this._curriculumFormStore.resetAcademicFormArray();
     this._router.navigate(['/']);
   }
 }
